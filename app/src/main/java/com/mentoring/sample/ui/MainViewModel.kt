@@ -10,12 +10,15 @@ import com.mentoring.sample.ui.base.AbstractViewModel
 import com.mentoring.sample.util.dummy.DummyContents
 import com.mentoring.sample.util.ex.Event
 import com.orhanobut.logger.Logger
+import dagger.assisted.Assisted
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MainViewModel(
-    private val textStr: String,
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val repository: IMainRepository) : AbstractViewModel() {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
@@ -23,40 +26,22 @@ class MainViewModel(
     private var _uiData = MutableLiveData<MainUiEvent>()
     val uiData : LiveData<MainUiEvent> get() = _uiData
 
-    private var _uiData2 = MutableLiveData<Event<MainUiEvent>>()
-    val uiData2 : LiveData<Event<MainUiEvent>> get() = _uiData2
-
-    fun loadData() {
+    override fun loadApi() {
+        //Logger.d("savedStateHandle : " +savedStateHandle.get("key"))
         //_uiData.value = MainUiEvent.ShowProgress(true)
         _progressBar.value = true
-        Logger.d("out")
-
-//        viewModelScope.launch(Dispatchers.IO) {
-//            Logger.d("in")
-//            val result = repository.getItems2()
-//            delay(3000)
-//            Logger.d("in2")
-//            delay(3000)
-//            Logger.d("in3")
-//            delay(3000)
-//            Logger.d("in4")
-//            delay(3000)
-//            _uiData.postValue( MainUiEvent.Success(result))
-//        }
 
         val disposable = repository.getItems()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { dataList ->
-                //Handler(Looper.getMainLooper()).postDelayed( {
-                //UI를 그리는 로직이 상당히 많다. (5초)
-                    _uiData.value = MainUiEvent.Success(dataList)
-                //}, 5000)
+                Logger.d("MainViewModel API Response")
+                _uiData.value = MainUiEvent.Success(dataList)
             }
         compositeDisposable.add(disposable)
 
-        _progressBar.value = false
         //_uiData.value = MainUiEvent.ShowProgress(false)
+        _progressBar.value = false
     }
 
     override fun onCleared() {

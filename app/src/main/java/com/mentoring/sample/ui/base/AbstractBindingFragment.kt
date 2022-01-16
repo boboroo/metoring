@@ -1,13 +1,16 @@
 package com.mentoring.sample.ui.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.orhanobut.logger.Logger
 
 abstract class AbstractBindingFragment<B: ViewDataBinding, VM: ViewModel> : Fragment() {
 
@@ -20,6 +23,25 @@ abstract class AbstractBindingFragment<B: ViewDataBinding, VM: ViewModel> : Frag
     abstract fun initView(root: View)
 
     abstract fun initViewModel()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Logger.d("onAttach")
+        val backCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Remove all fragments from the childFragmentManager,
+                // but exclude the first added child fragment.
+                // This child fragment will be deleted with its parent.
+                if (childFragmentManager.backStackEntryCount> 0) {
+                    childFragmentManager.popBackStack()
+                    return
+                }
+                // Delete parent fragment
+                parentFragmentManager.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

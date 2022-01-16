@@ -9,7 +9,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val koinModule = module(override = true) {
-
+/*
     single<MainDataSource>{
         RemoteMainDataSource(get())
     }
@@ -17,7 +17,7 @@ val koinModule = module(override = true) {
         MainRepository(get())
     }
     viewModel {
-        (testStr: String) ->
-        MainViewModel(testStr, get())
-    }
+        (keyword: String) ->
+        MainViewModel(keyword, get())
+    }*/
 }

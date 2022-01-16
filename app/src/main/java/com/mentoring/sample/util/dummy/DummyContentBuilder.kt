@@ -11,11 +11,10 @@ class DummyContentBuilder {
     }
 
     fun makeDummyContents(
-        count: Int = Random(System.currentTimeMillis()).nextInt(4, 12),
+        max: Int = 5,
         onClick: ((id: String) -> Unit) = {}
     ): List<DummyContents> {
         val random = Random(System.currentTimeMillis())
-        val max = random.nextInt(3, count)
         return (1..max).map { index ->
             makeDummyContent(
                 index.toString(),

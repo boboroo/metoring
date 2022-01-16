@@ -19,10 +19,10 @@ class MentoringApplication : Application(){
 
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            androidContext(context)
-            modules(koinModule)
-        }
+//        startKoin {
+//            androidContext(context)
+//            modules(koinModule)
+//        }
 
         Logger.addLogAdapter(AndroidLogAdapter())
     }

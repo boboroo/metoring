@@ -11,7 +11,7 @@ import com.mentoring.sample.util.dummy.DummyContents
 import com.orhanobut.logger.Logger
 import javax.inject.Inject
 
-class MainRecyclerAdapter() : RecyclerView.Adapter<MainRecyclerAdapter.MainViewHolder>() {
+class MainRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<MainRecyclerAdapter.MainViewHolder>() {
 
     private val currentList = mutableListOf<DummyContents>()
 

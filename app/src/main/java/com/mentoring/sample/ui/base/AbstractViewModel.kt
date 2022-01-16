@@ -13,4 +13,15 @@ abstract class AbstractViewModel : ViewModel() {
 
     // AbstractViewModel -> AbstractLoginViewModel(로그인 관련된 공통 기능들이 포함)
     // AbstractBindingFragment -> AbstractLoginBindingFragment (로그인 관련 공통 기능 )
+    private var firstLoadData = true
+    private val pageCnt = 1
+
+    abstract fun loadApi()
+
+    fun loadData(force: Boolean=false) {
+        if(firstLoadData || force) {
+            loadApi()
+            firstLoadData = false
+        }
+    }
 }

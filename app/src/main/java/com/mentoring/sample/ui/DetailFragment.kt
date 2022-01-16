@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -16,17 +17,21 @@ import com.mentoring.sample.databinding.ViewRecyclerBinding
 import com.mentoring.sample.ui.adapter.MainRecyclerAdapter
 import com.mentoring.sample.ui.base.AbstractTitleFragment
 import com.orhanobut.logger.Logger
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailFragment : AbstractTitleFragment<MainViewModel>() {
 
     lateinit var detailBinding : ViewRecyclerBinding
 
-    private lateinit var mainAdapter: MainRecyclerAdapter
+    @Inject
+    lateinit var mainAdapter: MainRecyclerAdapter
 
-    override val viewModel by viewModels<MainViewModel> {
+    override val viewModel by activityViewModels<MainViewModel> {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MainViewModel("", MainRepository(LocalMainDataSource())) as T
+                return MainViewModel(MainRepository(LocalMainDataSource())) as T
             }
         }
     }
@@ -44,9 +49,7 @@ class DetailFragment : AbstractTitleFragment<MainViewModel>() {
             detailBinding = createdBinding
             detailBinding.recyclerView.run {
                 layoutManager = LinearLayoutManager(context)
-                adapter = MainRecyclerAdapter().also { createdAdapter ->
-                    mainAdapter = createdAdapter
-                }
+                adapter = mainAdapter
             }
         }.root
     }

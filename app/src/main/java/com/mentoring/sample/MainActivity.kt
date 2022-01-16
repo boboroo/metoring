@@ -2,10 +2,9 @@ package com.mentoring.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import com.mentoring.sample.ui.DetailFragment
+import android.os.Handler
+import androidx.fragment.app.FragmentManager
 import com.mentoring.sample.ui.MainFragment
-import com.mentoring.sample.ui.mvp.MainFragment2
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -21,8 +20,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.container, MainFragment.newInstance())
-                .commitNow()
+                .add(R.id.container, MainFragment.newInstance("aaa"))
+                .commit()
         }
     }
 }
