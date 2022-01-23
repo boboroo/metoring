@@ -63,7 +63,7 @@ class MainFragment2 : Fragment(), MainContract.View {
     }
 
     override fun updateData(dataList: List<DummyContents>) {
-        mainAdapter.setItems(dataList)
+       // mainAdapter.setItems(dataList)
     }
 
     override fun showProgressBar() {

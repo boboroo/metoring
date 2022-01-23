@@ -12,11 +12,11 @@ import com.mentoring.sample.R
 @BindingAdapter("setGlide")
 fun setImgUrl(imageView: ImageView, imageUrl: String?) {
 
-    val loadImage = imageUrl.takeIf { ! it.isNullOrEmpty() }?.run {
+    val url = imageUrl.takeIf { ! it.isNullOrEmpty() }?.run {
         this
     } ?: R.drawable.ic_launcher_background
 
     Glide.with(imageView.rootView.context)
-        .load(loadImage)
+        .load(url)
         .into(imageView)
 }

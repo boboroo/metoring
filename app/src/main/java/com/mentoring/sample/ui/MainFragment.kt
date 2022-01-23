@@ -61,12 +61,12 @@ class MainFragment : AbstractBindingFragment<FragmentMainBinding, MainViewModel>
             layoutManager = LinearLayoutManager(context)
             adapter = mainAdapter
         }
-        binding.btnOpen.setOnClickListener {
-            childFragmentManager.commit {
-                add(R.id.container_above, DetailFragment.newInstance())
-                addToBackStack(null)
-            }
-        }
+//        binding.btnOpen.setOnClickListener {
+//            childFragmentManager.commit {
+//                add(R.id.container_above, DetailFragment.newInstance())
+//                addToBackStack(null)
+//            }
+//        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
