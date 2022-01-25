@@ -1,0 +1,115 @@
+{
+  "result": "200",
+  "data": [
+    {
+      "viewtype": "image",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1490885578174-acda8905c2c6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+      }
+
+    },  {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1484406566174-9da000fda645?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "10000",
+        "name" : "상품01",
+        "detail" : "상품01 입니다."
+      }
+    }, {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1528821128474-27f963b062bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "20000",
+        "name" : "상품02",
+        "detail" : "상품02 입니다."
+      }
+    }, {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1513677785800-9df79ae4b10b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        "price": "30000",
+        "name" : "상품03",
+        "detail" : "상품03 입니다."
+      }
+    },  {
+      "viewtype": "image",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1565279159111-6f289a47739c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+      }
+    },
+    {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1484406566174-9da000fda645?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "40000",
+        "name" : "상품04",
+        "detail" : "상품04 입니다."
+      }
+    }, {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "50000",
+        "name" : "상품05",
+        "detail" : "상품05 입니다."
+      }
+    },
+    {
+      "viewtype": "image",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+      }
+    },
+    {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1484406566174-9da000fda645?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "60000",
+        "name" : "상품06",
+        "detail" : "상품06 입니다."
+      }
+    }, {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "70000",
+        "name" : "상품07",
+        "detail" : "상품07 입니다."
+      }
+    },
+    {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1484406566174-9da000fda645?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "860000",
+        "name" : "상품08",
+        "detail" : "상품08 입니다."
+      }
+    }, {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "90000",
+        "name" : "상품09",
+        "detail" : "상품09 입니다."
+      }
+    },
+    {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1484406566174-9da000fda645?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "100000",
+        "name" : "상품10",
+        "detail" : "상품10 입니다."
+      }
+    }, {
+      "viewtype": "productItem",
+      "data": {
+        "image": "https://images.unsplash.com/photo-1481349518771-20055b2a7b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
+        "price": "110000",
+        "name" : "상품011",
+        "detail" : "상품11 입니다."
+      }
+    }
+  ]
+}
