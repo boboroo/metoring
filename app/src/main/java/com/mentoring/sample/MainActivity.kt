@@ -2,16 +2,9 @@ package com.mentoring.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.FragmentManager
-import com.mentoring.sample.ui.MainFragment
+import com.mentoring.sample.ui.ProductsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-/**
- *   앞으로 하게 될 것들
- *   - 추상화, 요구사항 추가, 패키지구조 변경
- *   - ViewModel, LiveData, DI 전부 써보기
- */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.container, MainFragment.newInstance("aaa"))
+                .add(R.id.container, ProductsFragment.newInstance())
                 .commit()
         }
     }

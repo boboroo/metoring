@@ -2,6 +2,7 @@ package com.mentoring.sample.data.repository
 
 import com.mentoring.sample.data.datasource.MainDataSource
 import com.mentoring.sample.util.dummy.DummyContents
+import com.shiny.shopping.data.models.ListUIData
 import io.reactivex.Single
 
 /**
@@ -10,11 +11,12 @@ import io.reactivex.Single
  */
 class MainRepository(private val dataSource: MainDataSource) : IMainRepository {
 
-    override fun getItems(): Single<List<DummyContents>> {
+    override fun getItems(): Single<List<ListUIData>> {
         return dataSource.getItems()
     }
 
-    override suspend fun getItems2(): List<DummyContents> {
-        return dataSource.getItems2()
+    override suspend fun getSuspendedItems(): List<DummyContents> {
+        return dataSource.getSuspendedItems()
     }
+
 }

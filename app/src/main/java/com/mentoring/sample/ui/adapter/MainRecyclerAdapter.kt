@@ -1,87 +1,67 @@
 package com.mentoring.sample.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.mentoring.sample.R
-import com.mentoring.sample.databinding.ViewDummyContentBinding
-import com.mentoring.sample.ui.base.AbstractRecyclerAdapter
-import com.mentoring.sample.ui.model.UIModel
-import com.mentoring.sample.ui.viewholder.MainUiViewHolder
-import com.mentoring.sample.util.dummy.DummyContents
-import com.mentoring.sample.util.ex.bindView
-import com.orhanobut.logger.Logger
+import com.mentoring.sample.data.models.UIData
+import com.mentoring.sample.data.models.ViewType
+import com.mentoring.sample.databinding.ViewImageBinding
+import com.mentoring.sample.databinding.ViewProductListItemBinding
+import com.shiny.shopping.data.models.ListUIData
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
-class MainRecyclerAdapter @Inject constructor() : AbstractRecyclerAdapter<UIModel, MainUiViewHolder>() {
+class MainRecyclerAdapter @Inject constructor(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object {
-        const val IMAGE_TYPE = 0
-        const val PRODUCT_TYPE = 1
-    }
+    private val currentList = mutableListOf<ListUIData>()
 
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainUiViewHolder {
-//        //return MainViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_dummy_content, parent, false))
-//        return MainViewHolder(bindView(parent, R.layout.view_dummy_content))
-//    }
-//
-//    override fun onBindViewHolder(holder: MainUiViewHolder, position: Int) {
-//        holder.setData(currentList[position])
-//    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainUiViewHolder {
-        return when(viewType) {
-            IMAGE_TYPE -> MainUiViewHolder.ImageViewHolder(bindView(parent, R.layout.view_dummy_image_content))
-            PRODUCT_TYPE -> MainUiViewHolder.ProductViewHolder(bindView(parent, R.layout.view_dummy_content))
-            else -> throw IllegalArgumentException("onCreateViewHolder viewType error")
-        }
-    }
-
-    override fun onBindViewHolder(holder: MainUiViewHolder, position: Int) {
-        when(holder) {
-            is MainUiViewHolder.ImageViewHolder -> {
-                holder.bind(currentList[position] as UIModel.ImageUIModel)
-            }
-            is MainUiViewHolder.ProductViewHolder -> {
-                holder.bind(currentList[position] as UIModel.DummyUIModel)
-            }
-        }
-    }
 
     override fun getItemViewType(position: Int): Int {
-        return when(currentList[position]) {
-            is UIModel.ImageUIModel -> IMAGE_TYPE
-            is UIModel.DummyUIModel -> PRODUCT_TYPE
+        return position
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
+        return when (currentList[position].viewtype) {
+            ViewType.PRODUCT -> ViewHolder(ViewProductListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ViewType.IMAGE -> ViewHolder(ViewImageBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> throw IllegalArgumentException("Non-existent view type")
         }
     }
 
-    fun setItems(items: List<UIModel>) {
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as? ViewHolder)?.setData(currentList[position].data)
+    }
+
+
+    override fun getItemCount(): Int {
+        return currentList.size
+    }
+
+
+    override fun getItemId(position: Int): Long {
+        return (currentList[position].data.id?.toLong())?:Long.MIN_VALUE
+    }
+
+
+    fun setItems(items: List<ListUIData>) {
         currentList.clear()
         currentList.addAll(items)
         notifyDataSetChanged()
     }
 
-//    //todo inner, binding, not binding
-//    class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//
-//        private val binding: ViewDummyContentBinding by lazy {
-//            requireNotNull(DataBindingUtil.bind(itemView))
-//        }
-//
-//        fun setData(dummyContents: DummyContents) {
-//            binding.model = dummyContents
-//        }
-//    }
 
-    class MainViewHolder(private val binding: ViewDummyContentBinding) : RecyclerView.ViewHolder(binding.root) {
+    private class ViewHolder(private val binding: ViewDataBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun setData(dummyContents: DummyContents) {
-            binding.model = dummyContents
+        fun setData(model: UIData) {
+            when(binding) {
+                is ViewProductListItemBinding -> binding.model = model
+                is ViewImageBinding -> binding.model = model
+            }
         }
-    }
 
+    }
 
 }
