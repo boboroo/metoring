@@ -12,6 +12,7 @@ import com.mentoring.sample.data.datasource.LocalMainDataSource
 import com.mentoring.sample.data.repository.MainRepository
 import com.mentoring.sample.databinding.FragmentProductsBinding
 import com.mentoring.sample.ui.adapter.MainRecyclerAdapter
+import com.mentoring.sample.ui.dialogs.ProductDetailDialog
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,6 +53,16 @@ class ProductsFragment: Fragment() {
             adapter = MainRecyclerAdapter().also { createdAdapter ->
                 mainAdapter = createdAdapter
                 mainAdapter.setHasStableIds(true)
+            }
+        }
+        viewModel.onItemClicked = OnClick { data ->
+            activity?.run {
+                if (!isFinishing()) {
+                    val dialog = ProductDetailDialog.newInstance(data)
+                    getSupportFragmentManager().beginTransaction()
+                        .add(dialog, "DetailProductDialog")
+                        .commitAllowingStateLoss()
+                }
             }
         }
         viewModel.loadData()

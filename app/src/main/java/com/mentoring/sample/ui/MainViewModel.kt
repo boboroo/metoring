@@ -1,8 +1,6 @@
 package com.mentoring.sample.ui
 
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.mentoring.sample.MentoringApplication
 import com.mentoring.sample.data.models.ViewType
 import com.mentoring.sample.data.repository.IMainRepository
 import com.mentoring.sample.ui.base.AbstractViewModel
@@ -19,7 +17,9 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private var _uiData = MutableLiveData<MainUiEvent>()
-    val uiData : LiveData<MainUiEvent> get() = _uiData
+    internal val uiData : LiveData<MainUiEvent> get() = _uiData
+
+    var onItemClicked: OnClick? = null
 
 
     override fun loadApi() {
@@ -33,14 +33,9 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
                     //TODO Multi columns per one row
                     when(listData.viewtype) {
                         ViewType.PRODUCT -> {
-                            listData.data.onClick =
-                                { id ->
-                                    Toast.makeText(
-                                        MentoringApplication.context,
-                                        "Clicked id : $id",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                            onItemClicked?.also { onClick ->
+                                listData.data.onClick = onClick
+                            }
                         }
                     }
                 }
@@ -50,6 +45,9 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
 
         _progressBar.value = false
     }
+
+
+
 
 
     override fun onCleared() {
