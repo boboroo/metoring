@@ -1,6 +1,7 @@
 package com.mentoring.sample.ui
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.mentoring.sample.data.models.ViewType
 import com.mentoring.sample.data.repository.IMainRepository
 import com.mentoring.sample.ui.base.AbstractViewModel
@@ -30,7 +31,7 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe{ dataList ->
                 dataList.forEach { listData ->
-                    //TODO Multi columns per one row
+                    //TODO Multiple columns in one row
                     when(listData.viewtype) {
                         ViewType.PRODUCT -> {
                             onItemClicked?.also { onClick ->
@@ -45,9 +46,6 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
 
         _progressBar.value = false
     }
-
-
-
 
 
     override fun onCleared() {
