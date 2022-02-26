@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +15,7 @@ import com.mentoring.sample.data.repository.MainRepository
 import com.mentoring.sample.databinding.ViewRecyclerBinding
 import com.mentoring.sample.ui.adapter.MainRecyclerAdapter
 import com.mentoring.sample.ui.base.AbstractTitleFragment
+import com.mentoring.sample.ui.base.AbstractViewModel
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -60,13 +60,13 @@ class DetailFragment : AbstractTitleFragment<MainViewModel>() {
         viewModel.uiData.observe(viewLifecycleOwner, Observer { uiEvent ->
             Logger.d("uiEvent")
             when(uiEvent) {
-                is MainViewModel.MainUiEvent.ShowProgress -> {
+                is AbstractViewModel.UiEvent.ShowProgress -> {
 
                 }
-                is MainViewModel.MainUiEvent.Success -> {
+                is AbstractViewModel.UiEvent.Success -> {
                     mainAdapter.setItems(uiEvent.data)
                 }
-                is MainViewModel.MainUiEvent.Error -> {
+                is AbstractViewModel.UiEvent.Error -> {
                     Toast.makeText(context, uiEvent.message, Toast.LENGTH_SHORT).show()
                 }
             }

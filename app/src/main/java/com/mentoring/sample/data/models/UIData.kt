@@ -1,7 +1,7 @@
 package com.mentoring.sample.data.models
 
 import android.os.Parcelable
-import com.mentoring.sample.ui.OnClick
+import com.mentoring.sample.ui.OnItemClickListener
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
@@ -13,5 +13,5 @@ data class UIData(
     val price: Int,
     val name: String,
     val detail: String,
-    var onClick: @RawValue OnClick
+    var onItemClickListener: @RawValue OnItemClickListener
 ): Parcelable

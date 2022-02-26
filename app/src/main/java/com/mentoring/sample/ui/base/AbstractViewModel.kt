@@ -3,7 +3,6 @@ package com.mentoring.sample.ui.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mentoring.sample.ui.MainViewModel
 
 abstract class AbstractViewModel : ViewModel() {
 
@@ -18,10 +17,18 @@ abstract class AbstractViewModel : ViewModel() {
 
     abstract fun loadApi()
 
+
     fun loadData(force: Boolean=false) {
         if(firstLoadData || force) {
             loadApi()
             firstLoadData = false
         }
+    }
+
+
+    sealed class UiEvent<T> {
+        data class ShowProgress<Nothing>(val show: Boolean) : UiEvent<Nothing>()
+        data class Success<T>(val data: List<T>) : UiEvent<T>()
+        data class Error<Nothing>(val message: String) : UiEvent<Nothing>()
     }
 }

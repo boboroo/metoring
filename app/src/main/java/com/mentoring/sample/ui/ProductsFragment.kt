@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.mentoring.sample.data.datasource.LocalMainDataSource
 import com.mentoring.sample.data.repository.MainRepository
 import com.mentoring.sample.databinding.FragmentProductsBinding
 import com.mentoring.sample.ui.adapter.MainRecyclerAdapter
+import com.mentoring.sample.ui.base.AbstractViewModel
 import com.mentoring.sample.ui.dialogs.ProductDetailDialog
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +43,6 @@ class ProductsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentProductsBinding.inflate(inflater, container, false)
         initAdapter()
         initViewModel()
@@ -55,11 +57,11 @@ class ProductsFragment: Fragment() {
                 mainAdapter.setHasStableIds(true)
             }
         }
-        viewModel.onItemClicked = OnClick { data ->
-            activity?.run {
-                if (!isFinishing()) {
+        viewModel.onItemClickListener = OnItemClickListener { data ->
+            activity?.let { hostActivity ->
+                if (!hostActivity.isFinishing()) {
                     val dialog = ProductDetailDialog.newInstance(data)
-                    getSupportFragmentManager().beginTransaction()
+                    hostActivity.getSupportFragmentManager().beginTransaction()
                         .add(dialog, "DetailProductDialog")
                         .commitAllowingStateLoss()
                 }
@@ -73,12 +75,12 @@ class ProductsFragment: Fragment() {
         viewModel.uiData.observe(viewLifecycleOwner, Observer { uiEvent ->
             Logger.d("uiEvent")
             when(uiEvent) {
-                is MainViewModel.MainUiEvent.ShowProgress -> {
+                is AbstractViewModel.UiEvent.ShowProgress -> {
                 }
-                is MainViewModel.MainUiEvent.Success -> {
+                is AbstractViewModel.UiEvent.Success -> {
                     mainAdapter.setItems(uiEvent.data)
                 }
-                is MainViewModel.MainUiEvent.Error -> {
+                is AbstractViewModel.UiEvent.Error -> {
                     Toast.makeText(context, uiEvent.message, Toast.LENGTH_SHORT).show()
                 }
             }

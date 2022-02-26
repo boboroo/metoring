@@ -2,9 +2,11 @@ package com.mentoring.sample.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mentoring.sample.data.db.helpers.RecentProductDbHelper
 import com.mentoring.sample.data.models.ViewType
 import com.mentoring.sample.data.repository.IMainRepository
 import com.mentoring.sample.ui.base.AbstractViewModel
+import com.orhanobut.logger.Logger
 import com.shiny.shopping.data.models.ListUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,10 +19,24 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private var _uiData = MutableLiveData<MainUiEvent>()
-    internal val uiData : LiveData<MainUiEvent> get() = _uiData
+    private var _uiData = MutableLiveData<UiEvent<ListUIData>>()
+    internal val uiData : LiveData<UiEvent<ListUIData>> get() = _uiData
 
-    var onItemClicked: OnClick? = null
+    var onItemClickListener: OnItemClickListener? = null
+        set(value) {
+            if (value is OnItemClickListener) {
+                field = OnItemClickListener { data ->
+                    RecentProductDbHelper.insertProduct(data)
+                        .subscribe { cnt ->
+                            Logger.d(
+                                if (cnt > 0) "the Recently view product data is added"
+                                else "The recently view product is not added" )
+                        }
+
+                    value.invoke(data)
+                }
+            }
+        }
 
 
     override fun loadApi() {
@@ -34,13 +50,13 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
                     //TODO Multiple columns in one row
                     when(listData.viewtype) {
                         ViewType.PRODUCT -> {
-                            onItemClicked?.also { onClick ->
-                                listData.data.onClick = onClick
+                            onItemClickListener?.also { onClick ->
+                                listData.data.onItemClickListener = onClick
                             }
                         }
                     }
                 }
-                _uiData.value = MainUiEvent.Success(dataList)
+                _uiData.value = UiEvent.Success(dataList)
             }
         compositeDisposable.add(disposable)
 
@@ -53,10 +69,4 @@ class MainViewModel @Inject constructor(private val repository: IMainRepository)
         compositeDisposable.clear()
     }
 
-
-    sealed class MainUiEvent {
-        data class ShowProgress(val show: Boolean) : MainUiEvent()
-        data class Success(val data: List<ListUIData>) : MainUiEvent()
-        data class Error(val message: String) : MainUiEvent()
-    }
 }

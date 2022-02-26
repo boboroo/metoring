@@ -1,25 +1,18 @@
 package com.mentoring.sample.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.commit
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mentoring.sample.R
-import com.mentoring.sample.data.datasource.LocalMainDataSource
-import com.mentoring.sample.data.repository.MainRepository
 import com.mentoring.sample.databinding.FragmentMainBinding
 import com.mentoring.sample.ui.adapter.MainRecyclerAdapter
 import com.mentoring.sample.ui.base.AbstractBindingFragment
+import com.mentoring.sample.ui.base.AbstractViewModel
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -98,12 +91,12 @@ class MainFragment : AbstractBindingFragment<FragmentMainBinding, MainViewModel>
         viewModel.uiData.observe(this, Observer { uiEvent ->
             Logger.d("uiEvent : $uiEvent")
             when(uiEvent) {
-                is MainViewModel.MainUiEvent.ShowProgress -> {
+                is AbstractViewModel.UiEvent.ShowProgress -> {
                 }
-                is MainViewModel.MainUiEvent.Success -> {
+                is AbstractViewModel.UiEvent.Success -> {
                     mainAdapter.setItems(uiEvent.data)
                 }
-                is MainViewModel.MainUiEvent.Error -> {
+                is AbstractViewModel.UiEvent.Error -> {
                     Toast.makeText(context, uiEvent.message, Toast.LENGTH_SHORT).show()
                 }
             }
