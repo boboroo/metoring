@@ -22,8 +22,16 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         if (savedInstanceState == null) {
+            val mainFragment = ProductsFragment.newInstance(binding.fullScreenFragmentContainer.id)
+
+            mainFragment.lifecycle.addObserver(object: DefaultLifecycleObserver {
+                override fun onCreate(owner: LifecycleOwner) {
+                    binding.fullScreenFragmentContainer.visibility = View.VISIBLE
+                }
+            })
+
             supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, ProductsFragment.newInstance())
+                .add(R.id.fragment_container, mainFragment)
                 .commit()
         }
 

@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mentoring.sample.R
 import com.mentoring.sample.databinding.FragmentMainBinding
 import com.mentoring.sample.ui.adapter.MainRecyclerAdapter
-import com.mentoring.sample.ui.base.AbstractBindingFragment
+import com.mentoring.sample.ui.base.AbstractPersistentFragment
 import com.mentoring.sample.ui.base.AbstractViewModel
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainFragment : AbstractBindingFragment<FragmentMainBinding, MainViewModel>() {
+class MainFragment : AbstractPersistentFragment<FragmentMainBinding, MainViewModel>() {
 
      //normal
 //     override val viewModel by viewModels<MainViewModel> {

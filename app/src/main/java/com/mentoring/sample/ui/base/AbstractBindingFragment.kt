@@ -9,20 +9,16 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import com.orhanobut.logger.Logger
 
-abstract class AbstractBindingFragment<B: ViewDataBinding, VM: ViewModel> : Fragment() {
+abstract class AbstractBindingFragment<B: ViewDataBinding> : Fragment() {
 
-    lateinit var binding: B
-
-    abstract val viewModel: VM
+    private var _binding: B? = null
+    internal val binding get() = _binding!!
 
     abstract fun getResourceId() : Int
 
     abstract fun initView(root: View)
-
-    abstract fun initViewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,13 +44,13 @@ abstract class AbstractBindingFragment<B: ViewDataBinding, VM: ViewModel> : Frag
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<B>(inflater, getResourceId(), container, false)
+        _binding = DataBindingUtil.inflate<B>(inflater, getResourceId(), container, false)
         initView(binding.root)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initViewModel()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -8,13 +8,13 @@ import androidx.lifecycle.Observer
 import com.mentoring.sample.R
 import com.mentoring.sample.databinding.FragmentRecentlyProductsBinding
 import com.mentoring.sample.ui.adapter.RecentlyProductsRecyclerAdapter
-import com.mentoring.sample.ui.base.AbstractBindingFragment
+import com.mentoring.sample.ui.base.AbstractPersistentFragment
 import com.mentoring.sample.ui.base.AbstractViewModel
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecentlyProductsFragment: AbstractBindingFragment<FragmentRecentlyProductsBinding, RecentlyProductsViewModel>() {
+class RecentlyProductsFragment: AbstractPersistentFragment<FragmentRecentlyProductsBinding, RecentlyProductsViewModel>() {
 
     private lateinit var recyclerViewAdapter: RecentlyProductsRecyclerAdapter
 
